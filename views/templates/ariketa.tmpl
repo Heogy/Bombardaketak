@@ -1,0 +1,28 @@
+<html>
+<head>
+<title>Ariketa</title>
+</head>
+<body>
+    <div>
+    <h1>Ariketa</h1>
+    <table>
+    <tr>
+    <td>Nor : {{.RandomNor}}</td>
+    <td>Nori : {{.RandomNori}}</td>
+    <td>Nork : {{.RandomNork}} </td>
+    <tr>
+    </tr>
+    <td><input name="era" value="thevalue"></td>
+    <td>
+        <button type="button" hx-post="/erantzun" hx-vals='{"galdera": {"denbora": "Orainaldia", "nor":"{{.RandomNor}}","nori":"{{.RandomNori}}","nork":"{{.RandomNork}}"}}' hx-include="[name='era']" hx-target="#search-results">
+        erantzun
+        </button>
+    </td>
+    </tr>
+    </table>
+</div>
+</body>
+</html>
+
+
+
