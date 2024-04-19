@@ -2,7 +2,10 @@ module bombardaketak
 
 go 1.19
 
-require github.com/go-playground/validator/v10 v10.17.0
+require (
+	github.com/go-playground/validator/v10 v10.17.0
+	github.com/lib/pq v1.10.9
+)
 
 require (
 	github.com/gabriel-vasile/mimetype v1.4.2 // indirect
