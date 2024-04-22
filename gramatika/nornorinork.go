@@ -3,8 +3,7 @@ package gramatika
 import (
 	"database/sql"
 	"fmt"
-	"math/rand"
-	"time"
+	"strings"
 
 	_ "github.com/lib/pq"
 )
@@ -27,8 +26,6 @@ const (
 	Haiek Nor = "Haiek"
 )
 
-var norValues = []Nor{"Ni", "Hura", "Gu", "Zu", "Zuek", "Haiek"}
-
 type Nori string
 
 const (
@@ -40,8 +37,6 @@ const (
 	Haiei Nori = "Haiei"
 )
 
-var noriValues = []Nori{"Niri", "Hari", "Guri", "Zuri", "Zuei", "Haiei"}
-
 type Nork string
 
 const (
@@ -52,8 +47,6 @@ const (
 	NorkZuek  Nork = "Zuek"
 	NorkHaiek Nork = "Haiek"
 )
-
-var norkValues = []Nork{"Nik", "Hark", "Guk", "Zuk", "Zuek", "Haiek"}
 
 type Guess struct {
 	Denbora   Denbora `json:"denbora" validate:"required"`
@@ -74,7 +67,7 @@ func Verify(guess Guess) (bool, string, error) {
 	if err != nil {
 		return false, "", err
 	}
-	return erantzuna == guess.Erantzuna, erantzuna, nil
+	return strings.EqualFold(strings.TrimSpace(erantzuna), strings.TrimSpace(guess.Erantzuna)), erantzuna, nil
 }
 func resolve(guess Guess) (string, error) {
 	psqlconn := fmt.Sprintf("host=%s port=%d dbname=%s sslmode=disable", "localhost", 5434, "gramatika")
@@ -416,18 +409,35 @@ func CheckError(err error) {
 
 func RandomGaldera() NorNoriNork { // todo be sure there is a valid answer
 
-	var err error
-	var eran string = ""
+	psqlconn := fmt.Sprintf("host=%s port=%d dbname=%s sslmode=disable", "localhost", 5434, "gramatika")
+
+	// open database
+	db, err := sql.Open("postgres", psqlconn)
+	CheckError(err)
+
+	// close database
+	defer db.Close()
+
+	// check db
+	err = db.Ping()
+	CheckError(err)
+
+	fmt.Println("Connected!")
 	var randomNor Nor
 	var randomNori Nori
 	var randomNork Nork
-	for ok := true; ok; ok = (err != nil || eran == "") {
-		rand.Seed(time.Now().UnixNano())
-		randomNor = norValues[rand.Intn(6)] // Use the last enum as the ceiling
-		// fmt.Println(randomNor)
-		randomNori = noriValues[rand.Intn(6)]
-		randomNork = norkValues[rand.Intn(6)]
-		eran, err = resolve(Guess{Denbora: "Orainaldia", Nor: randomNor, Nori: randomNori, Nork: randomNork})
+	row := db.QueryRow(`select nor, nori, nork from aditz_lagunak where denbora = $1 order by random () limit 1;`, "Orainaldia")
+	CheckError(err)
+
+	switch err := row.Scan(&randomNor, &randomNori, &randomNork); err {
+	case sql.ErrNoRows:
+		fmt.Println("No rows were returned!")
+	case nil:
+		fmt.Println(randomNor, randomNori, randomNork)
+	default:
+		panic(err)
 	}
+	fmt.Println(randomNor, randomNori, randomNork)
 	return NorNoriNork{randomNor, randomNori, randomNork}
+
 }
