@@ -14,7 +14,7 @@ func InitViews() {
 }
 
 func serveTemplates() {
-	http.Handle("/", http.FileServer(http.Dir("./views/statics")))
+	http.Handle("/", http.FileServer(http.Dir("./views")))
 	http.Handle("/ariketa", http.HandlerFunc(ariketaHandler))
 	http.Handle("/erantzun", http.HandlerFunc(erantzunHandler))
 }
@@ -40,7 +40,7 @@ func erantzunHandler(w http.ResponseWriter, r *http.Request) {
 
 	b, erantzuna, err := gramatika.Verify(guess)
 
-	var tmplFile = "./views/templates/erantzuna.tmpl"
+	var tmplFile = "./views/erantzuna.html"
 	tmpl, err := template.ParseFiles(tmplFile)
 	if err != nil {
 		panic(err)
@@ -86,7 +86,7 @@ func ariketaHandler(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte(`{"status": "error"}`))
 		return
 	}
-	var tmplFile = "./views/templates/ariketa.tmpl"
+	var tmplFile = "./views/ariketa.html"
 	tmpl, err := template.ParseFiles(tmplFile)
 	if err != nil {
 		panic(err)
