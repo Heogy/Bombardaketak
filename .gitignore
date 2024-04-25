@@ -1,3 +1,5 @@
 # IDE settings
 .vscode
 .idea
+
+.env

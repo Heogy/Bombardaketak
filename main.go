@@ -10,7 +10,7 @@ func main() {
 	print("\n=============================\n")
 	controllers.InitViews()
 	controllers.InitAPI()
-	print("Starting server at port 9980\n")
-	log.Fatal(http.ListenAndServe(":9980", nil))
+	print("Starting server at port 8080\n")
+	log.Fatal(http.ListenAndServe(":8080", nil))
 	print("=============================\n")
 }
