@@ -23,7 +23,7 @@ Insert into nori (nori) values ('Haiei');
 CREATE TABLE nork (
     nork TEXT PRIMARY KEY
 );
-Insert into nork (nork) values ('Zuk');
+Insert into nork (nork) values ('Nik');
 Insert into nork (nork) values ('Hark');
 Insert into nork (nork) values ('Guk');
 Insert into nork (nork) values ('Zuk');
@@ -149,7 +149,7 @@ Insert into nor_nori_nork (nor, nori, nork, aditz_languzailea, denbora) values (
 Insert into nor_nori_nork (nor, nori, nork, aditz_languzailea, denbora) values ('Haiek', 'Hari', 'Nik', 'Dizkiot', 'Orainaldia');
 Insert into nor_nori_nork (nor, nori, nork, aditz_languzailea, denbora) values ('Haiek', 'Zuri', 'Nik', 'Dizkizut', 'Orainaldia');
 Insert into nor_nori_nork (nor, nori, nork, aditz_languzailea, denbora) values ('Haiek', 'Zuei', 'Nik', 'Dizkizuet', 'Orainaldia');
-Insert into nor_nori_nork (nor, nori, nork, aditz_languzailea, denbora) values ('Haiek', 'Haiei', 'Hark', 'Dizkiet', 'Orainaldia');
+Insert into nor_nori_nork (nor, nori, nork, aditz_languzailea, denbora) values ('Haiek', 'Haiei', 'Nik', 'Dizkiet', 'Orainaldia');
 
 Insert into nor_nori_nork (nor, nori, nork, aditz_languzailea, denbora) values ('Hura', 'Niri', 'Hark', 'Dit', 'Orainaldia');
 Insert into nor_nori_nork (nor, nori, nork, aditz_languzailea, denbora) values ('Hura', 'Hari', 'Hark', 'Dio', 'Orainaldia');
@@ -181,7 +181,7 @@ Insert into nor_nori_nork (nor, nori, nork, aditz_languzailea, denbora) values (
 Insert into nor_nori_nork (nor, nori, nork, aditz_languzailea, denbora) values ('Hura', 'Haiei', 'Zuk', 'Diezu', 'Orainaldia');
 
 Insert into nor_nori_nork (nor, nori, nork, aditz_languzailea, denbora) values ('Haiek', 'Niri', 'Zuk', 'Dizkidazu', 'Orainaldia');
-Insert into nor_nori_nork (nor, nori, nork, aditz_languzailea, denbora) values ('Haiek', 'Hari', 'Zuk', 'Dizkozu', 'Orainaldia');
+Insert into nor_nori_nork (nor, nori, nork, aditz_languzailea, denbora) values ('Haiek', 'Hari', 'Zuk', 'Dizkiozu', 'Orainaldia');
 Insert into nor_nori_nork (nor, nori, nork, aditz_languzailea, denbora) values ('Haiek', 'Guri', 'Zuk', 'Dizkiguzu', 'Orainaldia');
 Insert into nor_nori_nork (nor, nori, nork, aditz_languzailea, denbora) values ('Haiek', 'Haiei', 'Zuk', 'Dizkiezu', 'Orainaldia');
 

@@ -3,6 +3,8 @@ package gramatika
 import (
 	"database/sql"
 	"fmt"
+	"os"
+	"strconv"
 	"strings"
 
 	_ "github.com/lib/pq"
@@ -70,16 +72,19 @@ func Verify(guess Guess) (bool, string, error) {
 	return strings.EqualFold(strings.TrimSpace(erantzuna), strings.TrimSpace(guess.Erantzuna)), erantzuna, nil
 }
 func resolve(guess Guess) (string, error) {
-	psqlconn := fmt.Sprintf("host=%s port=%d dbname=%s sslmode=disable", "localhost", 5434, "gramatika")
+	host := os.Getenv("DB_HOST")
+	port, _ := strconv.Atoi(os.Getenv("DB_PORT"))
+	user := os.Getenv("DB_USER")
+	dbName := os.Getenv("DB_NAME")
+	password := os.Getenv("DB_PASS")
 
-	// open database
+	psqlconn := fmt.Sprintf("host=%s port=%d dbname=%s sslmode=disable user=%s password=%s", host, port, dbName, user, password)
+
 	db, err := sql.Open("postgres", psqlconn)
 	CheckError(err)
 
-	// close database
 	defer db.Close()
 
-	// check db
 	err = db.Ping()
 	CheckError(err)
 
@@ -408,20 +413,24 @@ func CheckError(err error) {
 // }
 
 func RandomGaldera() NorNoriNork { // todo be sure there is a valid answer
-
-	psqlconn := fmt.Sprintf("host=%s port=%d dbname=%s sslmode=disable", "localhost", 5434, "gramatika")
-
 	// open database
+	// close database
+	// check db
+	host := os.Getenv("DB_HOST")
+	port, _ := strconv.Atoi(os.Getenv("DB_PORT"))
+	user := os.Getenv("DB_USER")
+	dbName := os.Getenv("DB_NAME")
+	password := os.Getenv("DB_PASS")
+
+	psqlconn := fmt.Sprintf("host=%s port=%d dbname=%s sslmode=disable user=%s password=%s", host, port, dbName, user, password)
+
 	db, err := sql.Open("postgres", psqlconn)
 	CheckError(err)
 
-	// close database
 	defer db.Close()
 
-	// check db
 	err = db.Ping()
 	CheckError(err)
-
 	fmt.Println("Connected!")
 	var randomNor Nor
 	var randomNori Nori
