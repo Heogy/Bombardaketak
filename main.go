@@ -18,7 +18,7 @@ func main() {
 	controllers.InitViews()
 	//controllers.InitAPI()
 	port := os.Getenv("PORT")
-	print("Starting server at port %s\n", port)
+	println("Starting server at port %s\n", port)
 	log.Fatal(http.ListenAndServe(":"+port, nil))
 	print("=============================\n")
 }
