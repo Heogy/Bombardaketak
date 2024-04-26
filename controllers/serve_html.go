@@ -3,12 +3,15 @@ package controllers
 import (
 	"bombardaketak/gramatika"
 	"encoding/json"
+	"github.com/go-playground/validator/v10"
 	"html/template"
 	"net/http"
 )
 
-func InitViews() {
+var validate *validator.Validate
 
+func InitViews() {
+	validate = validator.New(validator.WithRequiredStructEnabled())
 	serveTemplates()
 	println("templated files registered")
 }
@@ -29,8 +32,15 @@ func erantzunHandler(w http.ResponseWriter, r *http.Request) {
 		panic(err)
 	}
 	guess.Erantzuna = era
+	println(guess.Erantzuna)
+	println(guess.Denbora)
+	println(guess.Nor)
+	println(guess.Nori)
+	println(guess.Nori)
 	defer r.Body.Close()
+	println("erantzunaHandler")
 	validationError := validate.Struct(guess)
+	println("validationError")
 	if validationError != nil {
 
 		w.WriteHeader(http.StatusBadRequest)
@@ -40,9 +50,14 @@ func erantzunHandler(w http.ResponseWriter, r *http.Request) {
 
 	b, erantzuna, err := gramatika.Verify(guess)
 
+	if err != nil {
+		println("error verfifying")
+		panic(err)
+	}
 	var tmplFile = "./views/erantzuna.html"
 	tmpl, err := template.ParseFiles(tmplFile)
 	if err != nil {
+		println("error parsing template")
 		panic(err)
 	}
 	type Erantzuna struct {
