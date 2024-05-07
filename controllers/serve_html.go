@@ -3,9 +3,10 @@ package controllers
 import (
 	"bombardaketak/gramatika"
 	"encoding/json"
-	"github.com/go-playground/validator/v10"
 	"html/template"
 	"net/http"
+
+	"github.com/go-playground/validator/v10"
 )
 
 var validate *validator.Validate
@@ -19,6 +20,7 @@ func InitViews() {
 func serveTemplates() {
 	http.Handle("/", http.FileServer(http.Dir("./views")))
 	http.Handle("/ariketa", http.HandlerFunc(ariketaHandler))
+	http.Handle("/nornori", http.HandlerFunc(norNoriHandler))
 	http.Handle("/erantzun", http.HandlerFunc(erantzunHandler))
 }
 
@@ -26,7 +28,7 @@ func erantzunHandler(w http.ResponseWriter, r *http.Request) {
 	g := r.FormValue("galdera")
 	era := r.FormValue("era")
 
-	var guess gramatika.Guess
+	var guess gramatika.GuessNorNori
 	err := json.Unmarshal([]byte(g), &guess)
 	if err != nil {
 		panic(err)
@@ -36,7 +38,7 @@ func erantzunHandler(w http.ResponseWriter, r *http.Request) {
 	println(guess.Denbora)
 	println(guess.Nor)
 	println(guess.Nori)
-	println(guess.Nori)
+	println(guess.Nondik)
 	defer r.Body.Close()
 	println("erantzunaHandler")
 	validationError := validate.Struct(guess)
@@ -48,7 +50,7 @@ func erantzunHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	b, erantzuna, err := gramatika.Verify(guess)
+	b, erantzuna, err := gramatika.VerifyNorNori(guess)
 
 	if err != nil {
 		println("error verfifying")
@@ -63,6 +65,7 @@ func erantzunHandler(w http.ResponseWriter, r *http.Request) {
 	type Erantzuna struct {
 		Xuxen     string
 		Erantzuna string
+		Berritz   string
 	}
 	var msg string
 	if b {
@@ -71,7 +74,11 @@ func erantzunHandler(w http.ResponseWriter, r *http.Request) {
 		msg = "Oker"
 	}
 
-	var eran = Erantzuna{Xuxen: msg, Erantzuna: erantzuna}
+	var eran = Erantzuna{
+		Xuxen:     msg,
+		Erantzuna: erantzuna,
+		Berritz:   guess.Nondik,
+	}
 	err = tmpl.Execute(w, eran)
 	if err != nil {
 		panic(err)
@@ -113,4 +120,25 @@ func ariketaHandler(w http.ResponseWriter, r *http.Request) {
 		panic(err)
 	}
 	println("ariketaHandler end")
+}
+
+func norNoriHandler(w http.ResponseWriter, r *http.Request) {
+	println("norNoriHandler")
+	if r.Method != "GET" {
+		w.WriteHeader(http.StatusMethodNotAllowed)
+		w.Write([]byte(`{"status": "error"}`))
+		return
+	}
+	var tmplFile = "./views/nornori.html"
+	tmpl, err := template.ParseFiles(tmplFile)
+	if err != nil {
+		panic(err)
+	}
+	randomGaldera := gramatika.RandomNorNori()
+	println(randomGaldera.RandomNor)
+	err = tmpl.Execute(w, randomGaldera)
+	if err != nil {
+		panic(err)
+	}
+	println("norNoriHandler end")
 }

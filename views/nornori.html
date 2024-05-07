@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="eu">
+
+<head>
+    <title>NorNori</title>
+</head>
+
+<body>
+    <div>
+        <h1>Nor - Nori</h1>
+        <table>
+            <tr>
+                <td>Nor : {{.RandomNor}}</td>
+                <td>Nori : {{.RandomNori}}</td>
+            <tr>
+            </tr>
+            <td><input name="era" value="thevalue"></td>
+            <td>
+                <button type="button" hx-post="/erantzun"
+                    hx-vals='{"galdera": {"denbora": "Orainaldia", "nor":"{{.RandomNor}}","nori":"{{.RandomNori}}","nondik":"/nornori"}}'
+                    hx-include="[name='era']" hx-target="#app-container">
+                    erantzun
+                </button>
+            </td>
+            </tr>
+        </table>
+    </div>
+</body>
+
+</html>
