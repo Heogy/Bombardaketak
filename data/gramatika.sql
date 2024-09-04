@@ -120,7 +120,7 @@ Insert into nor_nori (nor, nori, aditz_lagunzailea, denbora) values ('Hura', 'Zu
 Insert into nor_nori (nor, nori, aditz_lagunzailea, denbora) values ('Hura', 'Zuei', 'Zitzaizuen', 'Lehenaldia');
 Insert into nor_nori (nor, nori, aditz_lagunzailea, denbora) values ('Hura', 'Haiei', 'Zitzaien', 'Lehenaldia');
 
-Insert into nor_nori (nor, nori, aditz_lagunzailea, denbora) values ('Haiek', 'Niri', 'Zitzazkidan', 'Lehenaldia');
+Insert into nor_nori (nor, nori, aditz_lagunzailea, denbora) values ('Haiek', 'Niri', 'Zitzaizkidan', 'Lehenaldia');
 Insert into nor_nori (nor, nori, aditz_lagunzailea, denbora) values ('Haiek', 'Hari', 'Zitzaizkion', 'Lehenaldia');
 Insert into nor_nori (nor, nori, aditz_lagunzailea, denbora) values ('Haiek', 'Guri', 'Zitzaizkigun', 'Lehenaldia');
 Insert into nor_nori (nor, nori, aditz_lagunzailea, denbora) values ('Haiek', 'Zuri', 'Zitzaizkizun', 'Lehenaldia');
